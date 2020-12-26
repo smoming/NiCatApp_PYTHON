@@ -8,7 +8,8 @@ import json
 
 @require_http_methods(["GET"])
 def list(self):
-    return JsonResponse(toJSON(DbUtil.DoQuery("SP_NATION_LIST")), safe=False, json_dumps_params={'ensure_ascii': False})
+    db = DbUtil()
+    return JsonResponse(toJSON(db.fetch("SP_NATION_LIST")), safe=False, json_dumps_params={'ensure_ascii': False})
 
 
 def toJSON(list=[]):

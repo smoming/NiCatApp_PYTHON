@@ -1,40 +1,49 @@
+import os
+import json
 import mysql.connector as dbc
 from mysql.connector import Error
+from NiCatApp_PYTHON import settings
 
 
-class DbUtil(object):
-    # def __getConnection(self):
-    #     return dbc.connect(host='localhost', database='NiCatBT', user='root', password='chenni0427', port=3306)
+class DbUtil:
+    def __init__(self):
+        # Opening JSON file
+        f = open(os.path.join(
+            settings.BASE_DIR, "statsic", "DbConfig.json"))
+        # returns JSON object as a dictionary
+        cfg = dict(json.load(f))
+        # Closing file
+        f.close()
 
-    # @staticmethod
-    # def DoSave(self, sp, **sqlParas):
-    #     try:
-    #         connection = self.__getConnection()
-    #         cursor = connection.cursor()
-    #         cursor.callproc(sp, sqlParas)
-    #         return cursor.stored_results()
-    #     except dbc.Error as error:
-    #         print("Failed to execute stored procedure: {}".format(error))
-    #     finally:
-    #         if (connection.is_connected()):
-    #             cursor.close()
-    #             connection.close()
+        self.host = cfg.get("host")
+        self.database = cfg.get("database")
+        self.user = cfg.get("user")
+        self.password = cfg.get("password")
+        self.port = cfg.get("port")
 
-    @staticmethod
-    def DoQuery(sp, sqlParas=None):
+    def __connect__(self):
+        self.con = dbc.connect(host=self.host, database=self.database,
+                               user=self.user, password=self.password, port=self.port)
+
+        self.cur = self.con.cursor()
+
+    def fetch(self, sp, sqlParas=None):
         try:
-            cn = dbc.connect(host='localhost', database='NiCatBT',
-                             user='root', password='chenni0427', port=3306)
+            self.__connect__()
             if sqlParas == None:
                 sqlParas = ()
-            cursor = cn.cursor()
-            cursor.callproc(sp, sqlParas)
-            for x in cursor.stored_results():
+            self.cur.callproc(sp, sqlParas)
+            for x in self.cur.stored_results():
                 result = x.fetchall()
             return result
-        except dbc.Error as error:
-            print("Failed to execute stored procedure: {}".format(error))
+        except:
+            raise Exception("connect database error.")
         finally:
-            if (cn.is_connected()):
-                cursor.close()
-                cn.close()
+            self.__disconnect__()
+
+    def __disconnect__(self):
+        if self.con.is_connected:
+            if self.cur is not None:
+                self.cur.close()
+            if self.con is not None:
+                self.con.close()
