@@ -1,0 +1,7 @@
+{
+    "host": "localhost", 
+    "database": "NiCatBT",
+    "user": "root",
+    "password": "chenni0427",
+    "port": 3306
+}
