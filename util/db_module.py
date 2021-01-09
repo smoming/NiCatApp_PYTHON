@@ -24,7 +24,7 @@ class DbUtil:
     def __connect__(self):
         self.con = dbc.connect(host=self.host, database=self.database,
                                user=self.user, password=self.password, port=self.port)
-
+        self.con.autocommit = True
         self.cur = self.con.cursor()
 
     def fetch(self, sp, sqlParas=None):
@@ -37,7 +37,18 @@ class DbUtil:
                 result = x.fetchall()
             return result
         except:
-            raise Exception("connect database error.")
+            raise Exception("fetch callproc error.")
+        finally:
+            self.__disconnect__()
+
+    def execute(self, sp, sqlParas):
+        try:
+            self.__connect__()
+            if sqlParas == None:
+                sqlParas = ()
+            self.cur.callproc(sp, sqlParas)
+        except:
+            raise Exception("execute callproc error.")
         finally:
             self.__disconnect__()
 
