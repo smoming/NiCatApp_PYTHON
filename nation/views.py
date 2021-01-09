@@ -3,7 +3,6 @@ from rest_framework.decorators import api_view
 from util.db_module import DbUtil
 import nation.models as m
 import util.dict_module as d
-import json
 
 # Create your views here.
 
