@@ -8,3 +8,5 @@ pip install django
 pip install djangorestframework
 # Python 連線 MySQL
 pip install mysql-connector-python
+# CORS
+pip install django-cors-headers

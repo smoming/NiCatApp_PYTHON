@@ -17,6 +17,6 @@ def toJSON(list=[]):
         list = []
     dict = []
     for x in list:
-        dict.append({"id": x[0], "name": x[1]})
+        dict.append({"ID": x[0], "Name": x[1]})
 
     return dict
