@@ -19,8 +19,8 @@ from django.conf.urls import include
 
 urlpatterns = [
     re_path('admin/', admin.site.urls),
-    re_path(r'^api/ApiNation', include('nation.urls')),
-    re_path(r'^api/ApiDeliveryTypes', include('delivery_type.urls')),
-    re_path(r'^api/ApiSuppliers', include('supplier.urls')),
-    re_path(r'^api/ApiCommodities', include('commodity.urls')),
+    re_path(r'^api/ApiNation/', include('nation.urls')),
+    re_path(r'^api/ApiDeliveryTypes/', include('delivery_type.urls')),
+    re_path(r'^api/ApiSuppliers/', include('supplier.urls')),
+    re_path(r'^api/ApiCommodities/', include('commodity.urls')),
 ]

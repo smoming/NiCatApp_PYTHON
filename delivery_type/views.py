@@ -14,7 +14,7 @@ def list_add(request):
     if app.isHTTP_GET(request.method):
         return JsonResponse(m.toJson(db.fetch("SP_DELIVERYTYPE_LIST")), safe=False)
     else:
-        return JsonResponse(db.execute("SP_DELIVERYTYPE_ADD", d.dictToList(request.data)), safe=False)
+        return JsonResponse(db.execute("SP_DELIVERYTYPE_ADD", d.dictToList(request.data, 'ID', 'Name')), safe=False)
 
 
 @api_view([app.HTTP_GET, app.HTTP_PUT, app.HTTP_DELETE])
@@ -24,7 +24,7 @@ def get_update_delete(request, id):
         pa = [id]
     elif (app.isHTTP_PUT(request.method)):
         sp = "SP_DELIVERYTYPE_UPDATE"
-        pa = d.dictToList(request.data)
+        pa = d.dictToList(request.data, 'ID', 'Name')
     else:
         sp = "SP_DELIVERYTYPE_DELETE"
         pa = [id]

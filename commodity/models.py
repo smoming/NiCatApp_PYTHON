@@ -4,7 +4,6 @@
 
 
 def toJson(list=[]):
-    print(list)
     if list is None:
         list = []
     dict = []
