@@ -1,6 +1,6 @@
 from django.urls import path
-from nation import views
-from nation.views import list_add, get_update_delete
+from commodity import views
+from commodity.views import list_add, get_update_delete
 
 urlpatterns = [
     path('/', list_add),
