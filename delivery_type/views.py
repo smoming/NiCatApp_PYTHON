@@ -1,6 +1,6 @@
 from django.http.response import JsonResponse
 from rest_framework.decorators import api_view
-import nation.models as m
+import delivery_type.models as m
 from util.db_module import DbUtil
 import util.dict_module as d
 import util.app_setting as app
@@ -12,21 +12,21 @@ import util.app_setting as app
 def list_add(request):
     db = DbUtil()
     if app.isHTTP_GET(request.method):
-        return JsonResponse(m.toJson(db.fetch("SP_NATION_LIST")), safe=False)
+        return JsonResponse(m.toJson(db.fetch("SP_DELIVERYTYPE_LIST")), safe=False)
     else:
-        return JsonResponse(db.execute("SP_NATION_ADD", d.dictToList(request.data)), safe=False)
+        return JsonResponse(db.execute("SP_DELIVERYTYPE_ADD", d.dictToList(request.data)), safe=False)
 
 
 @api_view([app.HTTP_GET, app.HTTP_PUT, app.HTTP_DELETE])
 def get_update_delete(request, id):
     if(app.isHTTP_GET(request.method)):
-        sp = "SP_NATION_GET"
+        sp = "SP_DELIVERYTYPE_GET"
         pa = [id]
     elif (app.isHTTP_PUT(request.method)):
-        sp = "SP_NATION_UPDATE"
+        sp = "SP_DELIVERYTYPE_UPDATE"
         pa = d.dictToList(request.data)
     else:
-        sp = "SP_NATION_DELETE"
+        sp = "SP_DELIVERYTYPE_DELETE"
         pa = [id]
 
     db = DbUtil()
