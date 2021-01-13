@@ -35,3 +35,15 @@ def get_update_delete(request, TransNo):
         return JsonResponse(m.toJson(db.fetch(sp, pa)), safe=False)
     else:
         return JsonResponse(db.execute(sp, pa), safe=False)
+
+
+@api_view([app.HTTP_GET])
+def getUnPaid(request):
+    db = DbUtil()
+    return JsonResponse(m.toJson(db.fetch("SP_ORDER_UNPAID")), safe=False)
+
+
+@api_view([app.HTTP_GET])
+def getUnPurchase(request):
+    db = DbUtil()
+    return JsonResponse(m.toJson(db.fetch("SP_ORDER_UNPURCHASE")), safe=False)
