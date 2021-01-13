@@ -27,4 +27,5 @@ urlpatterns = [
     re_path(r'^api/ApiReceipt/', include('receipt.urls')),
     re_path(r'^api/ApiPurchase/', include('purchase.urls')),
     re_path(r'^api/ApiTradings/', include('trading.urls')),
+    re_path(r'^api/ApiShippers/', include('shipper.urls')),
 ]

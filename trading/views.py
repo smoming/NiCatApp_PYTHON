@@ -40,4 +40,4 @@ def get_update_delete(request, TransNo):
 @api_view([app.HTTP_GET])
 def getUnShipped(request):
     db = DbUtil()
-    return JsonResponse(m.toJson(db.fetch("SP_TRADING_UNSHIPPED")), safe=False)
+    return JsonResponse(m.toJson(db.fetch("SP_TRADING_UNSHIPPED", d.dictToList(request.query_params, 'Buyer'))), safe=False)
