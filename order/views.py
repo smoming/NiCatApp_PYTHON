@@ -17,6 +17,12 @@ def list_add(request):
         return JsonResponse(db.execute("SP_ORDER_ADD", d.dictToList(request.data, 'TradeDate', 'CommodityID', 'TradeQuantity', 'TradeAmount', 'ReceiptNo', 'PurchaseNo', 'Remark')), safe=False)
 
 
+@api_view([app.HTTP_GET])
+def having_receipt(request):
+    db = DbUtil()
+    return JsonResponse(m.toJson(db.fetch("SP_ORDER_LIST", d.dictToList(request.query_params, 'StartDate', 'EndDate', 'CommodityID', 'TransNos', 'ReceiptNo', 'PurchaseNo'))), safe=False)
+
+
 @ api_view([app.HTTP_GET, app.HTTP_PUT, app.HTTP_DELETE])
 def get_update_delete(request, TransNo):
     if(app.isHTTP_GET(request.method)):
